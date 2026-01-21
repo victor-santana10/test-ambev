@@ -9,6 +9,10 @@ namespace Ambev.DeveloperEvaluation.ORM;
 public class DefaultContext : DbContext
 {
     public DbSet<User> Users { get; set; }
+    public DbSet<Products> Products { get; set; }
+    public DbSet<Branches> Branches { get; set; }
+    public DbSet<Sales> Sales { get; set; }
+    public DbSet<SalesItems> SalesItems { get; set; }
 
     public DefaultContext(DbContextOptions<DefaultContext> options) : base(options)
     {
