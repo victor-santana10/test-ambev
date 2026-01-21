@@ -43,14 +43,13 @@ public class SalesItemsConfiguration : IEntityTypeConfiguration<SalesItems>
         builder.HasIndex(si => si.SalesId);
         builder.HasIndex(si => si.ProductId);
 
-        builder.HasOne<Sales>()
-               .WithMany()
+        builder.HasOne(si => si.Sales)
+               .WithMany(s => s.SalesItems)
                .HasForeignKey(si => si.SalesId);
 
-        builder.HasIndex(si => si.ProductId);
-
-        builder.HasOne<Products>()
-               .WithMany()
+        builder.HasOne(si => si.Product)
+               .WithMany(p => p.SalesItems)
                .HasForeignKey(si => si.ProductId);
+
     }
 }

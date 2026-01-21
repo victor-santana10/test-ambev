@@ -32,13 +32,17 @@ public class SalesConfiguration : IEntityTypeConfiguration<Sales>
         builder.HasIndex(s => s.UserId);
         builder.HasIndex(s => s.BranchId);
 
-        builder.HasOne<User>()
-               .WithMany()
+        builder.HasOne(s => s.User)
+               .WithMany(b => b.Sales)
                .HasForeignKey(s => s.UserId);
 
-        builder.HasOne<Branches>()
-               .WithMany()
+        builder.HasOne(s => s.Branch)
+               .WithMany(b => b.Sales)
                .HasForeignKey(s => s.BranchId);
+
+        builder.HasMany(s => s.SalesItems)
+               .WithOne(si => si.Sales)
+               .HasForeignKey(si => si.SalesId);
     }
 }
 

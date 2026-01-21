@@ -27,5 +27,9 @@ public class ProductsConfiguration : IEntityTypeConfiguration<Products>
         builder.Property(p => p.CreatedAt)
                .HasDefaultValueSql("now()")
                .IsRequired();
+
+        builder.HasMany(p => p.SalesItems)
+               .WithOne(si => si.Product)
+               .HasForeignKey(si => si.ProductId);
     }
 }

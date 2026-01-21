@@ -11,5 +11,7 @@ namespace Ambev.DeveloperEvaluation.Domain.Entities
         public DateTime? UpdatedAt { get; set; }
         public DateTime? DeletedAt { get; set; }
 
+        public ICollection<SalesItems> SalesItems { get; set; }
+
     }
 }

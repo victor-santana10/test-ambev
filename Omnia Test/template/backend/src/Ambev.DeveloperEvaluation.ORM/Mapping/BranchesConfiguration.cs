@@ -22,5 +22,9 @@ public class BranchesConfiguration : IEntityTypeConfiguration<Branches>
         builder.Property(b => b.CreatedAt)
                .HasDefaultValueSql("now()")
                .IsRequired();
+
+        builder.HasMany(b => b.Sales)
+               .WithOne(s => s.Branch)
+               .HasForeignKey(s => s.BranchId);
     }
 }
