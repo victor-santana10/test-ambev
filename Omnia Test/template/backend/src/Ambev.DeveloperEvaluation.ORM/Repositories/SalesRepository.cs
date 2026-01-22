@@ -50,6 +50,7 @@ public class SalesRepository : ISalesRepository
             return null;
 
         sale.UpdatedAt = DateTime.UtcNow;
+        sale.CreatedAt = existingSale.CreatedAt;
         _context.Entry(existingSale).CurrentValues.SetValues(sale);
         await _context.SaveChangesAsync(cancellationToken);
         return existingSale;
