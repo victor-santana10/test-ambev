@@ -1,9 +1,8 @@
-using Ambev.DeveloperEvaluation.WebApi.Features.Branches.UpdateBranch;
 using FluentValidation;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Branches.GetBranch;
 
-public class GetBranchRequestValidator : AbstractValidator<UpdateBranchRequest>
+public class GetBranchRequestValidator : AbstractValidator<GetBranchRequest>
 {
     public GetBranchRequestValidator()
     {

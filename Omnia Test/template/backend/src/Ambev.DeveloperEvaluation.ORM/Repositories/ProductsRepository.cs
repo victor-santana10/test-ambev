@@ -56,6 +56,7 @@ public class ProductsRepository : IProductsRepository
             return null;
 
         product.UpdatedAt = DateTime.UtcNow;
+        product.CreatedAt = existingProduct.CreatedAt;
         _context.Entry(existingProduct).CurrentValues.SetValues(product);
         await _context.SaveChangesAsync(cancellationToken);
         return existingProduct;

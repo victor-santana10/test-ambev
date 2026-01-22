@@ -2,7 +2,6 @@ using AutoMapper;
 using MediatR;
 using FluentValidation;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
-using Ambev.DeveloperEvaluation.Branches.GetBranch;
 
 namespace Ambev.DeveloperEvaluation.Application.Branches.GetBranch;
 

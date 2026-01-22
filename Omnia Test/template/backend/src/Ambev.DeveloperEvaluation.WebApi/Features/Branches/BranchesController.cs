@@ -1,7 +1,7 @@
-﻿using Ambev.DeveloperEvaluation.Application.Branches.CreateBranch;
-using Ambev.DeveloperEvaluation.Application.Branches.DeleteBranch;
-using Ambev.DeveloperEvaluation.Application.Branches.GetBranch;
-using Ambev.DeveloperEvaluation.Application.Branches.UpdateBranch;
+﻿using Ambev.DeveloperEvaluation.Application.Products.CreateProducts;
+using Ambev.DeveloperEvaluation.Application.Products.DeleteProducts;
+using Ambev.DeveloperEvaluation.Application.Products.GetAllProducts;
+using Ambev.DeveloperEvaluation.Application.Products.UpdateProducts;
 using Ambev.DeveloperEvaluation.WebApi.Common;
 using Ambev.DeveloperEvaluation.WebApi.Features.Branches.Branch;
 using Ambev.DeveloperEvaluation.WebApi.Features.Branches.CreateBranch;
@@ -40,7 +40,7 @@ namespace Ambev.DeveloperEvaluation.WebApi.Features.Branches
             if (!validationResult.IsValid)
                 return BadRequest(validationResult.Errors);
 
-            var command = _mapper.Map<CreateBranchCommand>(request);
+            var command = _mapper.Map<CreateProductsCommand>(request);
             var response = await _mediator.Send(command, cancellationToken);
 
             return Created(string.Empty, new ApiResponseWithData<CreateBranchResponse>
@@ -65,7 +65,7 @@ namespace Ambev.DeveloperEvaluation.WebApi.Features.Branches
             if (!validationResult.IsValid)
                 return BadRequest(validationResult.Errors);
 
-            var command = _mapper.Map<UpdateBranchCommand>(request);
+            var command = _mapper.Map<UpdateProductsCommand>(request);
             var response = await _mediator.Send(command, cancellationToken);
 
             return Ok(new ApiResponseWithData<UpdateBranchResponse>
@@ -77,26 +77,26 @@ namespace Ambev.DeveloperEvaluation.WebApi.Features.Branches
         }
 
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(ApiResponseWithData<UpdateBranchResponse>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponseWithData<GetBranchResponse>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetBranch([FromRoute] Guid id, CancellationToken cancellationToken)
         {
-            var request = new UpdateBranchRequest { Id = id };
+            var request = new GetBranchRequest { Id = id };
             var validator = new GetBranchRequestValidator();
             var validationResult = await validator.ValidateAsync(request, cancellationToken);
 
             if (!validationResult.IsValid)
                 return BadRequest(validationResult.Errors);
 
-            var command = _mapper.Map<GetBranchCommand>(request.Id);
+            var command = _mapper.Map<GetAllProductsCommand>(request.Id);
             var response = await _mediator.Send(command, cancellationToken);
 
-            return Ok(new ApiResponseWithData<UpdateBranchResponse>
+            return Ok(new ApiResponseWithData<GetBranchResponse>
             {
                 Success = true,
                 Message = "Branch retrieved successfully",
-                Data = _mapper.Map<UpdateBranchResponse>(response)
+                Data = _mapper.Map<GetBranchResponse>(response)
             });
         }
 
@@ -113,7 +113,7 @@ namespace Ambev.DeveloperEvaluation.WebApi.Features.Branches
             if (!validationResult.IsValid)
                 return BadRequest(validationResult.Errors);
 
-            var command = _mapper.Map<DeleteBranchCommand>(request.Id);
+            var command = _mapper.Map<DeleteProductsCommand>(request.Id);
             await _mediator.Send(command, cancellationToken);
 
             return Ok(new ApiResponse
