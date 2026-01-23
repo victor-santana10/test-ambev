@@ -86,6 +86,14 @@ namespace Ambev.DeveloperEvaluation.WebApi.Features.Sales
                     Data = _mapper.Map<UpdateSaleResponse>(response)
                 });
             }
+            catch (KeyNotFoundException knfEx)
+            {
+                return NotFound(new ApiResponse
+                {
+                    Success = false,
+                    Message = knfEx.Message
+                });
+            }
             catch (Exception ex)
             {
                 return BadRequest(new ApiResponse
@@ -121,6 +129,14 @@ namespace Ambev.DeveloperEvaluation.WebApi.Features.Sales
                     Data = response
                 });
             }
+            catch (KeyNotFoundException knfEx)
+            {
+                return NotFound(new ApiResponse
+                {
+                    Success = false,
+                    Message = knfEx.Message
+                });
+            }
             catch (Exception ex)
             {
                 return BadRequest(new ApiResponse
@@ -147,6 +163,14 @@ namespace Ambev.DeveloperEvaluation.WebApi.Features.Sales
                     Success = true,
                     Message = "Sales retrieved successfully",
                     Data = response
+                });
+            }
+            catch (KeyNotFoundException knfEx)
+            {
+                return NotFound(new ApiResponse
+                {
+                    Success = false,
+                    Message = knfEx.Message
                 });
             }
             catch (Exception ex)
@@ -181,6 +205,14 @@ namespace Ambev.DeveloperEvaluation.WebApi.Features.Sales
                 {
                     Success = true,
                     Message = "Sale deleted successfully"
+                });
+            }
+            catch (KeyNotFoundException knfEx)
+            {
+                return NotFound(new ApiResponse
+                {
+                    Success = false,
+                    Message = knfEx.Message
                 });
             }
             catch (Exception ex)

@@ -119,6 +119,14 @@ namespace Ambev.DeveloperEvaluation.WebApi.Features.Branches
                     Data = _mapper.Map<GetBranchResponse>(response)
                 });
             }
+            catch(KeyNotFoundException knfEx)
+            {
+                return NotFound(new ApiResponse
+                {
+                    Success = false,
+                    Message = knfEx.Message
+                });
+            }
             catch (Exception ex)
             {
                 return BadRequest(new ApiResponse

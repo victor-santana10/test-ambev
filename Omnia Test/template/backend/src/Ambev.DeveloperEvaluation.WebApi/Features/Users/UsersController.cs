@@ -102,6 +102,14 @@ public class UsersController : BaseController
                 Data = _mapper.Map<GetUserResponse>(response)
             });
         }
+        catch (KeyNotFoundException knfEx)
+        {
+            return NotFound(new ApiResponse
+            {
+                Success = false,
+                Message = knfEx.Message
+            });
+        }
         catch (Exception ex)
         {
             return BadRequest(new ApiResponse
@@ -140,6 +148,14 @@ public class UsersController : BaseController
             {
                 Success = true,
                 Message = "User deleted successfully"
+            });
+        }
+        catch (KeyNotFoundException knfEx)
+        {
+            return NotFound(new ApiResponse
+            {
+                Success = false,
+                Message = knfEx.Message
             });
         }
         catch (Exception ex)

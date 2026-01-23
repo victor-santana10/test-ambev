@@ -123,6 +123,14 @@ namespace Ambev.DeveloperEvaluation.WebApi.Features.Products
                     Data = response
                 });
             }
+            catch (KeyNotFoundException knfEx)
+            {
+                return NotFound(new ApiResponse
+                {
+                    Success = false,
+                    Message = knfEx.Message
+                });
+            }
             catch (Exception ex)
             {
                 return BadRequest(new ApiResponse
@@ -149,6 +157,14 @@ namespace Ambev.DeveloperEvaluation.WebApi.Features.Products
                     Success = true,
                     Message = "Products retrieved successfully",
                     Data = response
+                });
+            }
+            catch (KeyNotFoundException knfEx)
+            {
+                return NotFound(new ApiResponse
+                {
+                    Success = false,
+                    Message = knfEx.Message
                 });
             }
             catch (Exception ex)
@@ -183,6 +199,14 @@ namespace Ambev.DeveloperEvaluation.WebApi.Features.Products
                 {
                     Success = true,
                     Message = "Product deleted successfully"
+                });
+            }
+            catch(KeyNotFoundException knfEx)
+            {
+                return NotFound(new ApiResponse
+                {
+                    Success = false,
+                    Message = knfEx.Message
                 });
             }
             catch (Exception ex)
