@@ -1,18 +1,21 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using Ambev.DeveloperEvaluation.Domain.Repositories;
+using Ambev.DeveloperEvaluation.Domain.Services;
+using AutoMapper;
 using FluentValidation;
-using Ambev.DeveloperEvaluation.Domain.Repositories;
+using MediatR;
 
 namespace Ambev.DeveloperEvaluation.Application.SalesItems.CreateSaleItem;
 
 public class CreateSaleItemHandler : IRequestHandler<CreateSaleItemCommand, CreateSaleItemResult>
 {
     private readonly ISalesItemsRepository _salesItemsRepository;
+    private readonly IDiscountService _discountService;
     private readonly IMapper _mapper;
 
-    public CreateSaleItemHandler(ISalesItemsRepository salesItemsRepository, IMapper mapper)
+    public CreateSaleItemHandler(ISalesItemsRepository salesItemsRepository, IDiscountService discountService, IMapper mapper)
     {
         _salesItemsRepository = salesItemsRepository;
+        _discountService = discountService;
         _mapper = mapper;
     }
 
@@ -23,6 +26,12 @@ public class CreateSaleItemHandler : IRequestHandler<CreateSaleItemCommand, Crea
 
         if (!validationResult.IsValid)
             throw new ValidationException(validationResult.Errors);
+
+        var calc = _discountService.Calculate(command.Quantity, command.Price);
+        command.Discount = calc.DiscountPercentage;
+        command.Total = calc.Total;
+
+        // TODO: Recalculate total sale value on insert
 
         var saleItem = _mapper.Map<Domain.Entities.SalesItems>(command);
         var createdSale = await _salesItemsRepository.CreateAsync(saleItem, cancellationToken);

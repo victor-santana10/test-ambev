@@ -22,6 +22,7 @@ public class DeleteProductsHandler : IRequestHandler<DeleteProductsCommand, Dele
         if (!validationResult.IsValid)
             throw new ValidationException(validationResult.Errors);
 
+        // TODO: Validate if the product has been sold and verify other FKs
         var success = await _productsRepository.DeleteAsync(request.Id, cancellationToken);
         if (!success)
             throw new KeyNotFoundException($"Products with ID {request.Id} not found");

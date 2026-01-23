@@ -45,6 +45,8 @@ public class CreateSaleHandler : IRequestHandler<CreateSaleCommand, CreateSaleRe
         var sale = _mapper.Map<Domain.Entities.Sales>(command);
         var createdSale = await _salesRepository.CreateAsync(sale, cancellationToken);
 
+
+        // TODO: Refactor to take product price from DB
         foreach (var item in command.SalesItems)
         {
             var createSaleItemCommand = new CreateSaleItemCommand

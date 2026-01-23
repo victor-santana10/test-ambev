@@ -25,6 +25,7 @@ public class BranchesConfiguration : IEntityTypeConfiguration<Branches>
 
         builder.HasMany(b => b.Sales)
                .WithOne(s => s.Branch)
-               .HasForeignKey(s => s.BranchId);
+               .HasForeignKey(s => s.BranchId)
+               .OnDelete(DeleteBehavior.Restrict);
     }
 }

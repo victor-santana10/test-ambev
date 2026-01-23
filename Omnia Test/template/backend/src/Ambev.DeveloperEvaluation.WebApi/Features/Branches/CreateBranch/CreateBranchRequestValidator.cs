@@ -7,6 +7,5 @@ public class CreateBranchRequestValidator : AbstractValidator<CreateBranchReques
     public CreateBranchRequestValidator()
     {
         RuleFor(branch => branch.Name).NotEmpty().Length(3, 50);
-        RuleFor(branch => branch.IsActive).NotEmpty();
     }
 }

@@ -7,7 +7,6 @@ namespace Ambev.DeveloperEvaluation.Application.Branches.UpdateBranch
         public UpdateBranchCommandValidator()
         {
             RuleFor(branch => branch.Id).NotEmpty().NotNull();
-            RuleFor(branch => branch.IsActive).NotEmpty();
             RuleFor(branch => branch.Name).NotEmpty().Length(3, 50);
         }
     }

@@ -23,7 +23,9 @@ namespace Ambev.DeveloperEvaluation.Application.Sales.UpdateSale
 
             if (!validationResult.IsValid)
                 throw new ValidationException(validationResult.Errors);
-            
+
+            // TODO: Refactor to alter SalesItems if necessary and valid FKs
+
             var product = _mapper.Map<Domain.Entities.Sales>(request);
             var updatedUser = await _productsRepository.UpdateAsync(product, cancellationToken);
             var result = _mapper.Map<UpdateSaleResult>(updatedUser);

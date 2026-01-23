@@ -30,6 +30,7 @@ public class ProductsConfiguration : IEntityTypeConfiguration<Products>
 
         builder.HasMany(p => p.SalesItems)
                .WithOne(si => si.Product)
-               .HasForeignKey(si => si.ProductId);
+               .HasForeignKey(si => si.ProductId)
+               .OnDelete(DeleteBehavior.Restrict);
     }
 }

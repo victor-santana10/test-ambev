@@ -8,6 +8,5 @@ public class CreateProductsCommandValidator : AbstractValidator<CreateProductsCo
     {
         RuleFor(product => product.Name).NotEmpty().Length(3, 50);
         RuleFor(product => product.Price).NotEmpty().NotNull().PrecisionScale(18, 2, true).GreaterThan(0);
-        RuleFor(product => product.IsActive).NotEmpty();
     }
 }

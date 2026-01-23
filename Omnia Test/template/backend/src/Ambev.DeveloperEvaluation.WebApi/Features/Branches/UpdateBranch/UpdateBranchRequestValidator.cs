@@ -8,6 +8,5 @@ public class UpdateBranchRequestValidator : AbstractValidator<UpdateBranchReques
     {
         RuleFor(branch => branch.Id).NotEmpty().WithMessage("Branch ID is required");
         RuleFor(branch => branch.Name).NotEmpty().Length(3, 50);
-        RuleFor(branch => branch.IsActive).NotEmpty();
     }
 }

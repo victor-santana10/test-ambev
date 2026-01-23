@@ -6,16 +6,9 @@ namespace Ambev.DeveloperEvaluation.WebApi.Features.Sales.CreateSale
     {
         public SalesItemsRequestValidator()
         {
-            RuleFor(x => x.ProductId)
-                .NotNull().NotEmpty();
-
-            RuleFor(x => x.Quantity)
-                .GreaterThan(0).WithMessage("Quantidade deve ser maior que zero (0).")
-                .LessThanOrEqualTo(20).WithMessage("Não é permitido vender uma quantidade maior que 20 deste item.");
-
-            RuleFor(x => x.Price)
-                .GreaterThan(0).WithMessage("Valor do produto deve ser maior que zero (0).");
-
+            RuleFor(x => x.ProductId).NotNull().NotEmpty();
+            RuleFor(x => x.Quantity).GreaterThan(0).LessThanOrEqualTo(20);
+            RuleFor(x => x.Price).GreaterThan(0);
         }
     }
 }
