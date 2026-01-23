@@ -14,12 +14,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Branches
 {
-
     [Route("api/[controller]")]
     [ApiController]
     public class BranchesController : ControllerBase
     {
-
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
 
@@ -34,46 +32,67 @@ namespace Ambev.DeveloperEvaluation.WebApi.Features.Branches
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateBranch([FromBody] CreateBranchRequest request, CancellationToken cancellationToken)
         {
-            var validator = new CreateBranchRequestValidator();
-            var validationResult = await validator.ValidateAsync(request, cancellationToken);
-
-            if (!validationResult.IsValid)
-                return BadRequest(validationResult.Errors);
-
-            var command = _mapper.Map<CreateProductsCommand>(request);
-            var response = await _mediator.Send(command, cancellationToken);
-
-            return Created(string.Empty, new ApiResponseWithData<CreateBranchResponse>
+            try
             {
-                Success = true,
-                Message = "Branch created successfully",
-                Data = _mapper.Map<CreateBranchResponse>(response)
-            });
+                var validator = new CreateBranchRequestValidator();
+                var validationResult = await validator.ValidateAsync(request, cancellationToken);
+
+                if (!validationResult.IsValid)
+                    return BadRequest(validationResult.Errors);
+
+                var command = _mapper.Map<CreateProductsCommand>(request);
+                var response = await _mediator.Send(command, cancellationToken);
+
+                return Created(string.Empty, new ApiResponseWithData<CreateBranchResponse>
+                {
+                    Success = true,
+                    Message = "Branch created successfully",
+                    Data = _mapper.Map<CreateBranchResponse>(response)
+                });
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ApiResponse
+                {
+                    Success = false,
+                    Message = ex.Message
+                });
+            }
         }
-
-
 
         [HttpPut]
         [ProducesResponseType(typeof(ApiResponseWithData<UpdateBranchResponse>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateBranch([FromQuery] Guid Id, [FromBody] UpdateBranchRequest request, CancellationToken cancellationToken)
         {
-            request.Id = Id;
-            var validator = new UpdateBranchRequestValidator();
-            var validationResult = await validator.ValidateAsync(request, cancellationToken);
-
-            if (!validationResult.IsValid)
-                return BadRequest(validationResult.Errors);
-
-            var command = _mapper.Map<UpdateProductsCommand>(request);
-            var response = await _mediator.Send(command, cancellationToken);
-
-            return Ok(new ApiResponseWithData<UpdateBranchResponse>
+            try
             {
-                Success = true,
-                Message = "Branch updated successfully",
-                Data = _mapper.Map<UpdateBranchResponse>(response)
-            });
+                request.Id = Id;
+                var validator = new UpdateBranchRequestValidator();
+                var validationResult = await validator.ValidateAsync(request, cancellationToken);
+
+                if (!validationResult.IsValid)
+                    return BadRequest(validationResult.Errors);
+
+                var command = _mapper.Map<UpdateProductsCommand>(request);
+                var response = await _mediator.Send(command, cancellationToken);
+
+                return Ok(new ApiResponseWithData<UpdateBranchResponse>
+                {
+                    Success = true,
+                    Message = "Branch updated successfully",
+                    Data = _mapper.Map<UpdateBranchResponse>(response)
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ApiResponse
+                {
+                    Success = false,
+                    Message = ex.Message
+                });
+            }
         }
 
         [HttpGet("{id}")]
@@ -82,22 +101,33 @@ namespace Ambev.DeveloperEvaluation.WebApi.Features.Branches
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetBranch([FromRoute] Guid id, CancellationToken cancellationToken)
         {
-            var request = new GetBranchRequest { Id = id };
-            var validator = new GetBranchRequestValidator();
-            var validationResult = await validator.ValidateAsync(request, cancellationToken);
-
-            if (!validationResult.IsValid)
-                return BadRequest(validationResult.Errors);
-
-            var command = _mapper.Map<GetAllProductsCommand>(request.Id);
-            var response = await _mediator.Send(command, cancellationToken);
-
-            return Ok(new ApiResponseWithData<GetBranchResponse>
+            try
             {
-                Success = true,
-                Message = "Branch retrieved successfully",
-                Data = _mapper.Map<GetBranchResponse>(response)
-            });
+                var request = new GetBranchRequest { Id = id };
+                var validator = new GetBranchRequestValidator();
+                var validationResult = await validator.ValidateAsync(request, cancellationToken);
+
+                if (!validationResult.IsValid)
+                    return BadRequest(validationResult.Errors);
+
+                var command = _mapper.Map<GetAllProductsCommand>(request.Id);
+                var response = await _mediator.Send(command, cancellationToken);
+
+                return Ok(new ApiResponseWithData<GetBranchResponse>
+                {
+                    Success = true,
+                    Message = "Branch retrieved successfully",
+                    Data = _mapper.Map<GetBranchResponse>(response)
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ApiResponse
+                {
+                    Success = false,
+                    Message = ex.Message
+                });
+            }
         }
 
         [HttpDelete("{id}")]
@@ -106,21 +136,32 @@ namespace Ambev.DeveloperEvaluation.WebApi.Features.Branches
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteBranch([FromRoute] Guid id, CancellationToken cancellationToken)
         {
-            var request = new DeleteBranchRequest { Id = id };
-            var validator = new DeleteBranchRequestValidator();
-            var validationResult = await validator.ValidateAsync(request, cancellationToken);
-
-            if (!validationResult.IsValid)
-                return BadRequest(validationResult.Errors);
-
-            var command = _mapper.Map<DeleteProductsCommand>(request.Id);
-            await _mediator.Send(command, cancellationToken);
-
-            return Ok(new ApiResponse
+            try
             {
-                Success = true,
-                Message = "Branch deleted successfully"
-            });
+                var request = new DeleteBranchRequest { Id = id };
+                var validator = new DeleteBranchRequestValidator();
+                var validationResult = await validator.ValidateAsync(request, cancellationToken);
+
+                if (!validationResult.IsValid)
+                    return BadRequest(validationResult.Errors);
+
+                var command = _mapper.Map<DeleteProductsCommand>(request.Id);
+                await _mediator.Send(command, cancellationToken);
+
+                return Ok(new ApiResponse
+                {
+                    Success = true,
+                    Message = "Branch deleted successfully"
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ApiResponse
+                {
+                    Success = false,
+                    Message = ex.Message
+                });
+            }
         }
     }
 }

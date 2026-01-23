@@ -9,7 +9,9 @@ public class CreateSaleCommandValidator : AbstractValidator<CreateSaleCommand>
     {
         RuleFor(x => x.UserId).NotEmpty().NotNull();
         RuleFor(x => x.BranchId).NotEmpty().NotNull();
-        RuleFor(x => x.Total).NotEmpty().NotNull().PrecisionScale(18, 2, true).GreaterThan(0);
-        RuleFor(x => x.IsActive).NotEmpty();
+        RuleFor(x => x.IsActive).NotEmpty().NotNull();
+
+        RuleForEach(x => x.SalesItems)
+            .SetValidator(new SalesItemsValidator());
     }
 }

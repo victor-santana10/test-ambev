@@ -1,0 +1,16 @@
+namespace Ambev.DeveloperEvaluation.WebApi.Features.SalesItems.GetSaleItem;
+
+public class GetSaleItemResponse
+{
+    public Guid Id { get; set; }
+    public Guid SalesId { get; set; }
+    public Guid ProductId { get; set; }
+    public int Quantity { get; set; }
+    public decimal Price { get; set; }
+    public decimal Discount { get; set; }
+    public decimal Total { get; set; }
+    public bool IsActive { get; set; }
+    public DateTime CreatedAt { get; set; }
+    public DateTime? UpdatedAt { get; set; }
+    public DateTime? DeletedAt { get; set; }
+}

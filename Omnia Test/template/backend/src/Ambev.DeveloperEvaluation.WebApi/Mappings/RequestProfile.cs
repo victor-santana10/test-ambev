@@ -1,7 +1,7 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Branches.CreateBranch;
 using Ambev.DeveloperEvaluation.Application.Branches.UpdateBranch;
-using Ambev.DeveloperEvaluation.Application.Sales.CreateSale;
-using Ambev.DeveloperEvaluation.Application.Sales.UpdateSale;
+using Ambev.DeveloperEvaluation.Application.SalesItems.CreateSaleItem;
+using Ambev.DeveloperEvaluation.Application.SalesItems.UpdateSaleItem;
 using Ambev.DeveloperEvaluation.Application.Users.CreateUser;
 using Ambev.DeveloperEvaluation.WebApi.Features.Branches.CreateBranch;
 using Ambev.DeveloperEvaluation.WebApi.Features.Branches.UpdateBranch;
@@ -9,6 +9,8 @@ using Ambev.DeveloperEvaluation.WebApi.Features.Products.CreateProduct;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.UpdateProduct;
 using Ambev.DeveloperEvaluation.WebApi.Features.Sales.CreateSale;
 using Ambev.DeveloperEvaluation.WebApi.Features.Sales.UpdateSale;
+using Ambev.DeveloperEvaluation.WebApi.Features.SalesItems.CreateSaleItem;
+using Ambev.DeveloperEvaluation.WebApi.Features.SalesItems.UpdateSaleItem;
 using Ambev.DeveloperEvaluation.WebApi.Features.Users.CreateUser;
 using AutoMapper;
 
@@ -20,11 +22,13 @@ public class RequestProfile : Profile
     {
         CreateMap<CreateUserRequest, CreateUserCommand>();
         CreateMap<CreateBranchRequest, CreateBranchCommand>();
-        CreateMap<CreateProductRequest, CreateSaleCommand>();
-        CreateMap<CreateSaleRequest, CreateSaleCommand>();
+        CreateMap<CreateProductRequest, CreateSaleItemCommand>();
+        CreateMap<CreateSaleRequest, CreateSaleItemCommand>();
+        CreateMap<CreateSaleItemRequest, CreateSaleItemCommand>();
 
         CreateMap<UpdateBranchRequest, UpdateBranchCommand>();
-        CreateMap<UpdateProductRequest, UpdateSaleCommand>();
-        CreateMap<UpdateSaleRequest, UpdateSaleCommand>();
+        CreateMap<UpdateProductRequest, UpdateSaleItemCommand>();
+        CreateMap<UpdateSaleRequest, UpdateSaleItemCommand>();
+        CreateMap<UpdateSaleItemRequest, UpdateSaleItemCommand>();
     }
 }
